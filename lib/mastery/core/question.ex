@@ -3,7 +3,7 @@ defmodule Mastery.Core.Question do
     Questions are instantiations of `Mastery.Core.Template`.
   """
 
-  alias Mastery.Core.{Quiz, Template}
+  alias Mastery.Core.{Template}
 
   defstruct ~w[asked substitutions template]a
 
