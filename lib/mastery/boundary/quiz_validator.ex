@@ -1,6 +1,6 @@
 defmodule Mastery.Boundary.QuizValidator do
   @moduledoc """
-    Validates the content of a quiz.
+    Validates the contents of a quiz.
   """
 
   import Mastery.Boundary.Validator
