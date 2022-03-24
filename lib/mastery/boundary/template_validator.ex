@@ -13,7 +13,7 @@ defmodule Mastery.Boundary.TemplateValidator do
     |> require(fields, :category, &validate_name/1)
     |> optional(fields, :instructions, &validate_instructions/1)
     |> require(fields, :raw, &validate_raw/1)
-    |> require(fields, :generators, &validate_generator/1)
+    |> require(fields, :generators, &validate_generators/1)
     |> require(fields, :checker, &validate_checker/1)
   end
 
@@ -31,6 +31,18 @@ defmodule Mastery.Boundary.TemplateValidator do
 
   def validate_raw(_raw), do: {:error, "must be a string"}
 
+  def validate_generators(generators) when is_map(generators) do
+    generators
+    |> Enum.map(&validate_generator/1)
+    |> Enum.reject(&(&1 == :ok))
+    |> case do
+      [ ] ->
+        :ok
+      errors ->
+        {:errors, errors}
+    end
+  end
+
   def validate_generator({name, generator}) when is_atom(name) and is_list(generator) do
     check(generator != [], {:error, "can't be empty"})
   end
@@ -39,8 +51,12 @@ defmodule Mastery.Boundary.TemplateValidator do
     :ok
   end
 
+  def validate_generator({name, _generator}) when is_atom(name) do
+    {:error, "name must be a string"}
+  end
+
   def validate_generator(_generator) do
-    {:error, "must be a pair of a string to either a list or a function"}
+    {:error, "generator must be a list or a function"}
   end
 
   def validate_checker(checker) when is_function(checker, 2), do: :ok
