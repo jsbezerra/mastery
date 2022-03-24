@@ -36,8 +36,9 @@ defmodule Mastery.Boundary.TemplateValidator do
     |> Enum.map(&validate_generator/1)
     |> Enum.reject(&(&1 == :ok))
     |> case do
-      [ ] ->
+      [] ->
         :ok
+
       errors ->
         {:errors, errors}
     end

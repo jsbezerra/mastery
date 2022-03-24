@@ -10,9 +10,9 @@ defmodule Mastery do
 
   def start_quiz_manager do
     GenServer.start_link(QuizManager, %{}, name: QuizManager)
-    Mastery.build_quiz Math.quiz_fields
-    Mastery.add_template Math.quiz.title, Math.template_fields
-    Mastery.take_quiz Math.quiz.title, "mathy@email.com"
+    Mastery.build_quiz(Math.quiz_fields())
+    Mastery.add_template(Math.quiz().title, Math.template_fields())
+    Mastery.take_quiz(Math.quiz().title, "mathy@email.com")
   end
 
   def build_quiz(fields) do
