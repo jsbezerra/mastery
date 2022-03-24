@@ -115,7 +115,7 @@ defmodule Mastery.Core.Quiz do
   end
 
   defp save_response(quiz, response) do
-    Map.put(quiz, :latest_response, response)
+    Map.put(quiz, :last_response, response)
   end
 
   defp mastered?(quiz) do
