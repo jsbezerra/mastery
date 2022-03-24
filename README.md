@@ -1,5 +1,7 @@
 # Mastery
 
+[![Elixir CI](https://github.com/jsbezerra/mastery/actions/workflows/elixir.yml/badge.svg)](https://github.com/jsbezerra/mastery/actions/workflows/elixir.yml)
+
 **TODO: Add description**
 
 ## Installation
