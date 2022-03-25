@@ -18,7 +18,7 @@ defmodule Mastery.Core.Quiz do
     struct!(__MODULE__, fields)
   end
 
-  def add_template(quiz, fields) do
+  def add_template(%__MODULE__{} = quiz, fields) do
     template = Template.new(fields)
 
     templates =
