@@ -6,7 +6,7 @@ defmodule Mastery do
   alias Mastery.Boundary.{Proctor, QuizManager, QuizSession, QuizValidator, TemplateValidator}
   alias Mastery.Core.Quiz
 
-  @persistence_fn Application.get_env(:mastery, :persistence_fn)
+  @persistence_fn Application.compile_env(:mastery, :persistence_fn)
 
   def build_quiz(fields) do
     with :ok <- QuizValidator.errors(fields),
