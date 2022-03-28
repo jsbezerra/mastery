@@ -3,6 +3,6 @@ defmodule MasteryPersistenceTest do
   doctest MasteryPersistence
 
   test "greets the world" do
-    assert MasteryPersistence.hello() == :world
+    assert 2 > 1
   end
 end
