@@ -34,11 +34,9 @@ defmodule Mastery.Boundary.QuizSession do
   defp active_sessions_for({:undefined, pid, :worker, [__MODULE__]}, title) do
     Mastery.Registry.QuizSession
     |> Registry.keys(pid)
-    |> Enum.filter(
-         fn {quiz_title, _email} ->
-           quiz_title == title
-         end
-       )
+    |> Enum.filter(fn {quiz_title, _email} ->
+      quiz_title == title
+    end)
   end
 
   def end_sessions(names) do
@@ -89,6 +87,7 @@ defmodule Mastery.Boundary.QuizSession do
   @impl GenServer
   def handle_call({:answer_question, answer, fun}, _from, {quiz, email}) do
     fun = fun || fn r, f -> f.(r) end
+
     fun.(response, fn r ->
       quiz
       |> Quiz.answer_question(Response.new(quiz, email, answer))
