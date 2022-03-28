@@ -31,7 +31,8 @@ defmodule Mastery.MixProject do
     [
       {:credo, "~> 1.6", only: [:dev, :test], runtime: false},
       {:ex_doc, "~> 0.24", only: :dev, runtime: false},
-      {:excoveralls, "~> 0.14", only: [:test], runtime: false}
+      {:excoveralls, "~> 0.14", only: [:test], runtime: false},
+      {:mastery_persistence, path: "./mastery_persistence"}
     ]
   end
 end
