@@ -87,10 +87,11 @@ defmodule Mastery.Boundary.QuizSession do
   @impl GenServer
   def handle_call({:answer_question, answer, fun}, _from, {quiz, email}) do
     fun = fun || fn r, f -> f.(r) end
+    response = Response.new(quiz, email, answer)
 
     fun.(response, fn r ->
       quiz
-      |> Quiz.answer_question(Response.new(quiz, email, answer))
+      |> Quiz.answer_question(r)
       |> Quiz.select_question()
     end)
     |> maybe_finish(email)
