@@ -25,13 +25,13 @@ defmodule Mastery.Boundary.QuizSession do
     Mastery.Supervisor.QuizSession
     |> DynamicSupervisor.which_children()
     |> Enum.filter(&child_pid?/1)
-    |> Enum.flat_map(&active_sessions_for(&1, quiz_title))
+    |> Enum.flat_map(&active_sessions(&1, quiz_title))
   end
 
   defp child_pid?({:undefined, pid, :worker, [__MODULE__]}) when is_pid(pid), do: true
   defp child_pid?(_child), do: false
 
-  defp active_sessions_for({:undefined, pid, :worker, [__MODULE__]}, title) do
+  defp active_sessions({:undefined, pid, :worker, [__MODULE__]}, title) do
     Mastery.Registry.QuizSession
     |> Registry.keys(pid)
     |> Enum.filter(fn {quiz_title, _email} ->
@@ -40,13 +40,7 @@ defmodule Mastery.Boundary.QuizSession do
   end
 
   def end_sessions(names) do
-    Enum.each(
-      names,
-      fn name ->
-        Logger.info("Stopping #{name.title}")
-        GenServer.stop(via(name))
-      end
-    )
+    Enum.each(names, fn name -> GenServer.stop(via(name)) end)
   end
 
   def start_link({quiz, email}) do

@@ -8,7 +8,7 @@ defmodule MasteryPersistence.Repo.Migrations.CreateResponses do
       add :to, :string, null: false
       add :email, :string, null: false
       add :answer, :string, null: false
-      add :correct, :string, null: false
+      add :correct, :boolean, null: false
 
       timestamps()
     end
