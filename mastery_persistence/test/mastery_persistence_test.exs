@@ -7,6 +7,7 @@ defmodule MasteryPersistenceTest do
 
   setup do
     :ok = Sandbox.checkout(Repo)
+
     response = %{
       quiz_title: :simple_addition,
       template_name: :single_digit_addition,
@@ -14,13 +15,16 @@ defmodule MasteryPersistenceTest do
       email: "student@example.com",
       answer: "7",
       correct: true,
-      timestamp: DateTime.utc_now
+      timestamp: DateTime.utc_now()
     }
-    {:ok, %{response: response}} end
+
+    {:ok, %{response: response}}
+  end
 
   test "responses are recorded", %{response: response} do
     assert Repo.aggregate(Response, :count, :id) == 0
     assert :ok = MasteryPersistence.record_response(response)
+
     assert Repo.all(Response)
            |> Enum.map(fn r -> r.email end) == [response.email]
   end
@@ -31,9 +35,11 @@ defmodule MasteryPersistenceTest do
 
   test "an error in the function rolls back the save", %{response: response} do
     assert Repo.aggregate(Response, :count, :id) == 0
+
     assert_raise RuntimeError, fn ->
       MasteryPersistence.record_response(response, fn _r -> raise "oops" end)
     end
+
     assert Repo.aggregate(Response, :count, :id) == 0
   end
 
@@ -43,7 +49,7 @@ defmodule MasteryPersistenceTest do
 
     response
     |> Map.put(:email, "other_#{response.email}")
-    |> MasteryPersistence.record_response
+    |> MasteryPersistence.record_response()
 
     assert MasteryPersistence.report(response.quiz_title) == %{
              response.email => 2,

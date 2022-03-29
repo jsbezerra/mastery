@@ -8,12 +8,12 @@ defmodule MasteryPersistence.Response do
   @timestamps ~W[inserted_at updated_at]a
 
   schema "responses" do
-    field :quiz_title, :string
-    field :template_name, :string
-    field :to, :string
-    field :email, :string
-    field :answer, :string
-    field :correct, :boolean
+    field(:quiz_title, :string)
+    field(:template_name, :string)
+    field(:to, :string)
+    field(:email, :string)
+    field(:answer, :string)
+    field(:correct, :boolean)
     timestamps()
   end
 
